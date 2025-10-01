@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Recipe Search — By Ingredients</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <img src="assets/logo.svg" alt="Recipe logo" width="44" height="44" />
+        <div>
+          <h1> Mealchemy</h1>
+          <p class="tagline">Turning simple ingredients into magic meals.</p>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="Primary navigation">
+        <button
+          id="menuToggle"
+          class="hamburger"
+          aria-expanded="false"
+          aria-controls="navList"
+        >
+          <img src="assets/menu.svg" alt="Menu" />
+        </button>
+        <ul id="navList" class="nav-list">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Only The Recipe</a></li>
+          <li><a href="#">Recipe Search</a></li>
+          <li><a href="#">Converter</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="contra">
+        <h1>Recipe Search By Ingredients</h1>
+        <p>
+          Recipe Search By Ingredients helps you find new meals you can make
+          with the ingredients you already have. Just enter the ingredients and
+          press generate to find what you can make with your ingredients.
+        </p>
+      </div>
+      <section class="hero container">
+        <form
+          id="searchForm"
+          class="search-form"
+          aria-label="Search recipes by ingredients"
+        >
+          <label for="ingredientsInput" class="sr-only"
+            >Enter ingredients (comma separated)</label
+          >
+
+          <!-- Input with search icon -->
+          <div class="input-wrapper">
+            <input
+              id="ingredientsInput"
+              name="ingredients"
+              type="search"
+              placeholder="e.g. tofu, tomato, garlic"
+              autocomplete="on"
+            />
+            <img src="assets/search.svg" alt="" class="input-icon" />
+          </div>
+
+          <button id="addIngredientBtn" type="button" class="btn subtle">
+            Add
+          </button>
+          <div
+            id="chips"
+            class="chips"
+            aria-live="polite"
+            aria-atomic="true"
+          ></div>
+          <button id="generateBtn" class="btn primary" type="submit">
+            Generate
+          </button>
+        </form>
+
+        <p class="hero-desc">
+          Enter the ingredients you have and find recipes that use them. Click a
+          recipe for details, save favorites, and filter results.
+        </p>
+      </section>
+
+      <section class="results container" aria-live="polite">
+        <div class="controls">
+          <div class="filters">
+            <label>
+              <input id="onlyExact" type="checkbox" /> Show exact matches only
+            </label>
+          </div>
+          <div id="status" class="status"></div>
+        </div>
+
+        <div id="recipesGrid" class="recipes-grid"></div>
+
+        <template id="recipeCardTemplate">
+          <article class="recipe-card" tabindex="0">
+            <img class="recipe-img" alt="" />
+            <div class="recipe-body">
+              <h3 class="recipe-title"></h3>
+              <p class="recipe-meta"></p>
+              <div class="card-actions">
+                <button class="btn-outline view-btn" style="border-radius: 12px; padding: 0 13px; border-style: none; border-color: white; cursor: pointer;">View</button>
+                <button
+                  class="fav-btn"
+                  aria-pressed="false"
+                  title="Save favorite"
+                ></button>
+              </div>
+            </div>
+          </article>
+        </template>
+      </section>
+
+      <section class="faq container" aria-label="Frequently asked questions">
+        <h2>FAQ</h2>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              What is Recipe Search By Ingredients?
+            </button>
+            <div class="faq-a" hidden>
+              <p>
+                If you ever wondered what can I make with these ingredients in
+                my fridge, we got you covered. Recipe Search By Ingredients
+                allow you to simply enter the ingredients you have, and find
+                recipes to make with them. You can search across dozens of
+                recipes by just entering a few ingredients. The idea is pretty
+                simple. All you have to do is look at the ingredients you have
+                and enter them into the ingredients box, then you press generate
+                and enjoy the recipes you can make with these ingredients.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              What problem does this solve?
+            </button>
+            <div class="faq-a" hidden>
+              <p>
+                We often found ourselves looking in the fridge and wondering: what can I make with these ingredients? So we decided to make a product that fixes that. It saves us a lot of time by rather than looking for recipes and then checking if we have all the ingredients over and over again; now we can simply enter the ingredients and find all the recipes we can make with them. Searching recipes by ingredients greatly speeds up the process to find amazing recipes you can make without needing to go to the store and buy more items.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              How does it work?
+            </button>
+            <div class="faq-a" hidden>
+              <p>
+                The idea is pretty simple, we collected millions of recipes and parsed out those ingredients. From there, we collected the various ingredients and when a user enters the ingredients and searches, we show only the recipes with the selected ingredients. By doing this, users can now search recipes by ingredients and not have to go out and scan each recipe to find whether or not they have the ingredients. It makes it so much easier for people to find recipes they can make with the ingredients they have.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal for recipe details -->
+    <div
+      id="modal"
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+    >
+      <div class="modal-panel" role="document">
+        <button id="modalClose" class="modal-close" aria-label="Close">
+          <img src="assets/close.svg" alt="Close" />
+        </button>
+        <div id="modalContent" class="modal-contents"></div>
+      </div>
+    </div>
+
+    <footer class="site-footer container">
+      <small>© <span id="year"></span> Recipe Search — Built with ♥</small>
+    </footer>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
